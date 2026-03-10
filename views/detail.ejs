@@ -23,28 +23,33 @@
     <h2>Base Stats</h2>
     <div class="stats">
       <% const statLabels = { 'hp': 'HP', 'attack': 'Attack', 'defense': 'Defense', 'special-attack': 'Sp. Atk', 'special-defense': 'Sp. Def', 'speed': 'Speed' }; %>
+      <% const statColors = { 'hp': '#f87171', 'attack': '#f97316', 'defense': '#facc15', 'special-attack': '#60a5fa', 'special-defense': '#a78bfa', 'speed': '#34d399' }; %>
       <% pokemon.stats.forEach(stat => { %>
         <div class="stat-row">
           <span class="stat-label"><%= statLabels[stat.name] || stat.name %></span>
           <span class="stat-value"><%= stat.value %></span>
           <div class="stat-bar-bg">
-            <div class="stat-bar" style="width: <%= (stat.value / 255 * 100).toFixed(1) %>%"></div>
+            <div class="stat-bar" style="width: <%= (stat.value / 255 * 100).toFixed(1) %>%; background: <%= statColors[stat.name] || '#e3350d' %>"></div>
           </div>
         </div>
       <% }) %>
     </div>
   </section>
 
-  <section class="abilities-section">
-    <h2>Abilities</h2>
-    <div class="abilities">
-      <% pokemon.abilities.forEach(ability => { %>
-        <span class="ability-badge">
-          <%= ability.name.replace('-', ' ') %><% if (ability.hidden) { %> <span class="hidden-label">(Hidden)</span><% } %>
-        </span>
+  <% if (pokemon.moves && pokemon.moves.length) { %>
+  <section class="moves-section">
+    <h2>Moves</h2>
+    <div class="moves-list">
+      <% pokemon.moves.forEach(move => { %>
+        <div class="move-item">
+          <span class="move-name"><%= move.name.replace(/-/g, ' ') %></span>
+          <span class="type-badge type-<%= move.type %>"><%= move.type %></span>
+          <span class="move-pp"><%= move.pp %>/<%= move.pp %></span>
+        </div>
       <% }) %>
     </div>
   </section>
+  <% } %>
 </div>
 
 <%- include('partials/footer') %>

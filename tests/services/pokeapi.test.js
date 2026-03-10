@@ -7,6 +7,14 @@ function makePokemonResponse(id) {
     types: [{ type: { name: 'normal' } }],
     stats: [{ stat: { name: 'hp' }, base_stat: 45 }],
     abilities: [{ ability: { name: 'overgrow' }, is_hidden: false }],
+    moves: [
+      {
+        move: { name: 'tackle', url: 'https://pokeapi.co/api/v2/move/33/' },
+        version_group_details: [
+          { move_learn_method: { name: 'level-up' }, level_learned_at: 1 },
+        ],
+      },
+    ],
   };
 }
 
@@ -53,6 +61,14 @@ describe('mapPokemon', () => {
         { ability: { name: 'overgrow' }, is_hidden: false },
         { ability: { name: 'chlorophyll' }, is_hidden: true },
       ],
+      moves: [
+        {
+          move: { name: 'tackle', url: 'https://pokeapi.co/api/v2/move/33/' },
+          version_group_details: [
+            { move_learn_method: { name: 'level-up' }, level_learned_at: 1 },
+          ],
+        },
+      ],
     };
 
     const result = pokeapi.mapPokemon(raw);
@@ -70,6 +86,7 @@ describe('mapPokemon', () => {
         { name: 'overgrow', hidden: false },
         { name: 'chlorophyll', hidden: true },
       ],
+      moveRefs: ['https://pokeapi.co/api/v2/move/33/'],
     });
   });
 });
@@ -90,6 +107,7 @@ describe('getAllGen1Pokemon', () => {
       sprite: expect.stringContaining('/1.png'),
       stats: [{ name: 'hp', value: 45 }],
       abilities: [{ name: 'overgrow', hidden: false }],
+      moveRefs: ['https://pokeapi.co/api/v2/move/33/'],
     });
   });
 
@@ -136,6 +154,14 @@ describe('getAllGen1Pokemon', () => {
               { ability: { name: 'overgrow' }, is_hidden: false },
               { ability: { name: 'chlorophyll' }, is_hidden: true },
             ],
+            moves: [
+              {
+                move: { name: 'tackle', url: 'https://pokeapi.co/api/v2/move/33/' },
+                version_group_details: [
+                  { move_learn_method: { name: 'level-up' }, level_learned_at: 1 },
+                ],
+              },
+            ],
           }),
       })
     );
@@ -164,10 +190,17 @@ describe('getAllGen1Pokemon', () => {
 });
 
 describe('getPokemonDetail', () => {
+  function makeMoveResponse() {
+    return { name: 'tackle', type: { name: 'normal' }, pp: 35 };
+  }
+
   function setupWithCache() {
     mockFetch((url) => {
       if (url.includes('pokemon-species')) {
         return makeSpeciesResponse();
+      }
+      if (url.includes('/move/')) {
+        return makeMoveResponse();
       }
       const id = parseInt(url.match(/pokemon\/(\d+)/)[1]);
       return makePokemonResponse(id);
@@ -196,6 +229,9 @@ describe('getPokemonDetail', () => {
       if (url.includes('pokemon-species')) {
         return makeSpeciesResponse('Line one\nLine two\fLine three');
       }
+      if (url.includes('/move/')) {
+        return { name: 'tackle', type: { name: 'normal' }, pp: 35 };
+      }
       const id = parseInt(url.match(/pokemon\/(\d+)/)[1]);
       return makePokemonResponse(id);
     });
@@ -213,6 +249,9 @@ describe('getPokemonDetail', () => {
           ],
         };
       }
+      if (url.includes('/move/')) {
+        return { name: 'tackle', type: { name: 'normal' }, pp: 35 };
+      }
       const id = parseInt(url.match(/pokemon\/(\d+)/)[1]);
       return makePokemonResponse(id);
     });
@@ -222,10 +261,15 @@ describe('getPokemonDetail', () => {
   });
 
   it('returns empty flavorText when species fetch fails', async () => {
-    let pokemonFetchDone = false;
     global.fetch = vi.fn((url) => {
       if (url.includes('pokemon-species')) {
         return Promise.resolve({ ok: false });
+      }
+      if (url.includes('/move/')) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve({ name: 'tackle', type: { name: 'normal' }, pp: 35 }),
+        });
       }
       const id = parseInt(url.match(/pokemon\/(\d+)/)[1]);
       return Promise.resolve({

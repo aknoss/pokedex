@@ -5,7 +5,8 @@
 }
 
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  font-family:
+    -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   background: #f5f5f5;
   color: #333;
   min-height: 100vh;
@@ -24,7 +25,6 @@ body {
   color: #e3350d;
 }
 
-/* Controls */
 .controls {
   display: flex;
   gap: 1rem;
@@ -69,7 +69,6 @@ body {
   border-color: #e3350d;
 }
 
-/* Card Grid */
 .card-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
@@ -83,7 +82,9 @@ body {
   text-align: center;
   text-decoration: none;
   color: inherit;
-  transition: transform 0.2s, box-shadow 0.2s;
+  transition:
+    transform 0.2s,
+    box-shadow 0.2s;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -118,7 +119,6 @@ body {
   margin-top: 0.3rem;
 }
 
-/* Type Badges */
 .type-badge {
   display: inline-block;
   padding: 0.2rem 0.6rem;
@@ -129,26 +129,65 @@ body {
   font-weight: 500;
 }
 
-.type-normal { background: #A8A878; }
-.type-fire { background: #F08030; }
-.type-water { background: #6890F0; }
-.type-electric { background: #F8D030; color: #333; }
-.type-grass { background: #78C850; }
-.type-ice { background: #98D8D8; color: #333; }
-.type-fighting { background: #C03028; }
-.type-poison { background: #A040A0; }
-.type-ground { background: #E0C068; color: #333; }
-.type-flying { background: #A890F0; }
-.type-psychic { background: #F85888; }
-.type-bug { background: #A8B820; }
-.type-rock { background: #B8A038; }
-.type-ghost { background: #705898; }
-.type-dragon { background: #7038F8; }
-.type-dark { background: #705848; }
-.type-steel { background: #B8B8D0; color: #333; }
-.type-fairy { background: #EE99AC; }
+.type-normal {
+  background: #a8a878;
+}
+.type-fire {
+  background: #f08030;
+}
+.type-water {
+  background: #6890f0;
+}
+.type-electric {
+  background: #f8d030;
+  color: #333;
+}
+.type-grass {
+  background: #78c850;
+}
+.type-ice {
+  background: #98d8d8;
+  color: #333;
+}
+.type-fighting {
+  background: #c03028;
+}
+.type-poison {
+  background: #a040a0;
+}
+.type-ground {
+  background: #e0c068;
+  color: #333;
+}
+.type-flying {
+  background: #a890f0;
+}
+.type-psychic {
+  background: #f85888;
+}
+.type-bug {
+  background: #a8b820;
+}
+.type-rock {
+  background: #b8a038;
+}
+.type-ghost {
+  background: #705898;
+}
+.type-dragon {
+  background: #7038f8;
+}
+.type-dark {
+  background: #705848;
+}
+.type-steel {
+  background: #b8b8d0;
+  color: #333;
+}
+.type-fairy {
+  background: #ee99ac;
+}
 
-/* Detail Page */
 .detail-page {
   max-width: 800px;
 }
@@ -216,15 +255,16 @@ body {
   line-height: 1.6;
 }
 
-/* Stats */
-.stats-section, .abilities-section {
+.stats-section,
+.moves-section {
   background: #fff;
   border-radius: 1rem;
   padding: 1.5rem 2rem;
   margin-bottom: 1.5rem;
 }
 
-.stats-section h2, .abilities-section h2 {
+.stats-section h2,
+.moves-section h2 {
   margin-bottom: 1rem;
   font-size: 1.3rem;
 }
@@ -262,22 +302,32 @@ body {
   transition: width 0.3s;
 }
 
-/* Abilities */
-.abilities {
+.moves-list {
   display: flex;
+  flex-direction: column;
   gap: 0.5rem;
-  flex-wrap: wrap;
 }
 
-.ability-badge {
-  padding: 0.4rem 1rem;
-  background: #f0f0f0;
-  border-radius: 2rem;
+.move-item {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  padding: 0.5rem 0.8rem;
+  background: #f9f9f9;
+  border-radius: 0.5rem;
+}
+
+.move-name {
+  flex: 1;
   font-size: 0.9rem;
   text-transform: capitalize;
+  font-weight: 500;
 }
 
-.hidden-label {
-  color: #999;
-  font-size: 0.8rem;
+.move-pp {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #555;
+  min-width: 45px;
+  text-align: right;
 }
