@@ -5,15 +5,15 @@ document.addEventListener('DOMContentLoaded', () => {
 
   search.addEventListener('input', () => {
     const query = search.value.toLowerCase().trim();
-    cards.forEach(card => {
+    cards.forEach((card) => {
       const name = card.dataset.name;
       card.style.display = name.includes(query) ? '' : 'none';
     });
   });
 
-  genButtons.forEach(btn => {
+  genButtons.forEach((btn) => {
     btn.addEventListener('click', () => {
-      genButtons.forEach(b => b.classList.remove('active'));
+      genButtons.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
     });
   });

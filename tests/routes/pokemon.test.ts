@@ -1,8 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from 'vitest';
-import createRouter from '../../src/routes/pokemon.js';
+import type { Mock } from 'vitest';
+import createRouter from '../../src/routes/pokemon';
 
 function mockRes() {
-  const res = {
+  const res: any = {
     render: vi.fn(),
     status: vi.fn(() => res),
     send: vi.fn(),
@@ -10,14 +11,14 @@ function mockRes() {
   return res;
 }
 
-function getHandler(router, method, path) {
+function getHandler(router: any, method: string, path: string) {
   const layer = router.stack.find(
-    (l) => l.route && l.route.path === path && l.route.methods[method]
+    (l: any) => l.route && l.route.path === path && l.route.methods[method],
   );
   return layer.route.stack[0].handle;
 }
 
-let mockGetAll, mockGetDetail, router;
+let mockGetAll: Mock, mockGetDetail: Mock, router: any;
 
 beforeEach(() => {
   mockGetAll = vi.fn();

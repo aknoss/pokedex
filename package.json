@@ -2,18 +2,31 @@
   "name": "pokedex",
   "version": "1.0.0",
   "description": "A Pokedex web app showing Gen 1 Pokemon",
-  "main": "server.js",
+  "main": "dist/server.js",
   "scripts": {
-    "start": "node server.js",
+    "start": "node dist/server.js",
+    "dev": "nodemon --watch src --watch server.ts --ext ts --exec tsx server.ts",
+    "build": "tsc",
     "test": "vitest run",
-    "test:watch": "vitest"
+    "test:watch": "vitest",
+    "lint": "eslint .",
+    "format": "prettier --write ."
   },
   "dependencies": {
     "ejs": "^3.1.10",
     "express": "^4.21.0"
   },
   "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.4.0",
     "@vitest/coverage-istanbul": "^4.0.18",
+    "eslint": "^10.0.3",
+    "nodemon": "^3.1.14",
+    "prettier": "^3.8.1",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "typescript-eslint": "^8.57.0",
     "vitest": "^4.0.18"
   }
 }
