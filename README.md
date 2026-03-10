@@ -17,10 +17,19 @@ A server-rendered Pokedex web app showing all 151 Gen 1 Pokemon, built with Expr
 
 ```bash
 npm install
+npm run build
 npm start
 ```
 
 The server starts on [http://localhost:3000](http://localhost:3000).
+
+## Development
+
+For development with auto-reload:
+
+```bash
+npm run dev
+```
 
 ## Running Tests
 
