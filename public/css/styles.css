@@ -1,0 +1,283 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: #f5f5f5;
+  color: #333;
+  min-height: 100vh;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+}
+
+.logo {
+  text-align: center;
+  font-size: 2.5rem;
+  margin-bottom: 1.5rem;
+  color: #e3350d;
+}
+
+/* Controls */
+.controls {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+  align-items: center;
+}
+
+.gen-buttons {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.gen-btn {
+  padding: 0.5rem 1rem;
+  border: 2px solid #ddd;
+  background: #fff;
+  border-radius: 2rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  transition: all 0.2s;
+}
+
+.gen-btn.active {
+  background: #e3350d;
+  color: #fff;
+  border-color: #e3350d;
+}
+
+#search {
+  flex: 1;
+  min-width: 200px;
+  padding: 0.6rem 1rem;
+  border: 2px solid #ddd;
+  border-radius: 2rem;
+  font-size: 1rem;
+  outline: none;
+  transition: border-color 0.2s;
+}
+
+#search:focus {
+  border-color: #e3350d;
+}
+
+/* Card Grid */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  gap: 1rem;
+}
+
+.card {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1rem;
+  text-align: center;
+  text-decoration: none;
+  color: inherit;
+  transition: transform 0.2s, box-shadow 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.12);
+}
+
+.card img {
+  width: 120px;
+  height: 120px;
+  object-fit: contain;
+}
+
+.card-id {
+  font-size: 0.8rem;
+  color: #999;
+}
+
+.card-name {
+  font-size: 1rem;
+  font-weight: 600;
+  text-transform: capitalize;
+}
+
+.card-types {
+  display: flex;
+  gap: 0.3rem;
+  margin-top: 0.3rem;
+}
+
+/* Type Badges */
+.type-badge {
+  display: inline-block;
+  padding: 0.2rem 0.6rem;
+  border-radius: 1rem;
+  color: #fff;
+  font-size: 0.75rem;
+  text-transform: capitalize;
+  font-weight: 500;
+}
+
+.type-normal { background: #A8A878; }
+.type-fire { background: #F08030; }
+.type-water { background: #6890F0; }
+.type-electric { background: #F8D030; color: #333; }
+.type-grass { background: #78C850; }
+.type-ice { background: #98D8D8; color: #333; }
+.type-fighting { background: #C03028; }
+.type-poison { background: #A040A0; }
+.type-ground { background: #E0C068; color: #333; }
+.type-flying { background: #A890F0; }
+.type-psychic { background: #F85888; }
+.type-bug { background: #A8B820; }
+.type-rock { background: #B8A038; }
+.type-ghost { background: #705898; }
+.type-dragon { background: #7038F8; }
+.type-dark { background: #705848; }
+.type-steel { background: #B8B8D0; color: #333; }
+.type-fairy { background: #EE99AC; }
+
+/* Detail Page */
+.detail-page {
+  max-width: 800px;
+}
+
+.back-link {
+  display: inline-block;
+  margin-bottom: 1.5rem;
+  color: #e3350d;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+.detail-header {
+  display: flex;
+  gap: 2rem;
+  align-items: center;
+  background: #fff;
+  border-radius: 1rem;
+  padding: 2rem;
+  margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.detail-image {
+  width: 250px;
+  height: 250px;
+  object-fit: contain;
+}
+
+.detail-info {
+  flex: 1;
+  min-width: 200px;
+}
+
+.detail-id {
+  font-size: 1.2rem;
+  color: #999;
+  font-weight: 600;
+}
+
+.detail-name {
+  font-size: 2.5rem;
+  text-transform: capitalize;
+  margin: 0.3rem 0 0.8rem;
+}
+
+.detail-types {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 1rem;
+}
+
+.detail-types .type-badge {
+  font-size: 0.9rem;
+  padding: 0.3rem 1rem;
+}
+
+.flavor-text {
+  font-style: italic;
+  color: #666;
+  line-height: 1.6;
+}
+
+/* Stats */
+.stats-section, .abilities-section {
+  background: #fff;
+  border-radius: 1rem;
+  padding: 1.5rem 2rem;
+  margin-bottom: 1.5rem;
+}
+
+.stats-section h2, .abilities-section h2 {
+  margin-bottom: 1rem;
+  font-size: 1.3rem;
+}
+
+.stat-row {
+  display: grid;
+  grid-template-columns: 80px 40px 1fr;
+  gap: 0.8rem;
+  align-items: center;
+  margin-bottom: 0.6rem;
+}
+
+.stat-label {
+  font-size: 0.85rem;
+  color: #666;
+}
+
+.stat-value {
+  font-weight: 600;
+  font-size: 0.9rem;
+  text-align: right;
+}
+
+.stat-bar-bg {
+  background: #e8e8e8;
+  border-radius: 0.5rem;
+  height: 10px;
+  overflow: hidden;
+}
+
+.stat-bar {
+  height: 100%;
+  background: #e3350d;
+  border-radius: 0.5rem;
+  transition: width 0.3s;
+}
+
+/* Abilities */
+.abilities {
+  display: flex;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.ability-badge {
+  padding: 0.4rem 1rem;
+  background: #f0f0f0;
+  border-radius: 2rem;
+  font-size: 0.9rem;
+  text-transform: capitalize;
+}
+
+.hidden-label {
+  color: #999;
+  font-size: 0.8rem;
+}

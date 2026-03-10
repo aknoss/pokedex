@@ -1,0 +1,50 @@
+<%- include('partials/header', { title: pokemon.name + ' | Pokedex' }) %>
+
+<div class="container detail-page">
+  <a href="/" class="back-link">&larr; Back to Pokedex</a>
+
+  <div class="detail-header">
+    <img src="<%= pokemon.sprite %>" alt="<%= pokemon.name %>" class="detail-image">
+    <div class="detail-info">
+      <span class="detail-id">#<%= String(pokemon.id).padStart(3, '0') %></span>
+      <h1 class="detail-name"><%= pokemon.name %></h1>
+      <div class="detail-types">
+        <% pokemon.types.forEach(type => { %>
+          <span class="type-badge type-<%= type %>"><%= type %></span>
+        <% }) %>
+      </div>
+      <% if (pokemon.flavorText) { %>
+        <p class="flavor-text"><%= pokemon.flavorText %></p>
+      <% } %>
+    </div>
+  </div>
+
+  <section class="stats-section">
+    <h2>Base Stats</h2>
+    <div class="stats">
+      <% const statLabels = { 'hp': 'HP', 'attack': 'Attack', 'defense': 'Defense', 'special-attack': 'Sp. Atk', 'special-defense': 'Sp. Def', 'speed': 'Speed' }; %>
+      <% pokemon.stats.forEach(stat => { %>
+        <div class="stat-row">
+          <span class="stat-label"><%= statLabels[stat.name] || stat.name %></span>
+          <span class="stat-value"><%= stat.value %></span>
+          <div class="stat-bar-bg">
+            <div class="stat-bar" style="width: <%= (stat.value / 255 * 100).toFixed(1) %>%"></div>
+          </div>
+        </div>
+      <% }) %>
+    </div>
+  </section>
+
+  <section class="abilities-section">
+    <h2>Abilities</h2>
+    <div class="abilities">
+      <% pokemon.abilities.forEach(ability => { %>
+        <span class="ability-badge">
+          <%= ability.name.replace('-', ' ') %><% if (ability.hidden) { %> <span class="hidden-label">(Hidden)</span><% } %>
+        </span>
+      <% }) %>
+    </div>
+  </section>
+</div>
+
+<%- include('partials/footer') %>
