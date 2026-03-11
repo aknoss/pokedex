@@ -29,6 +29,14 @@ beforeEach(() => {
   });
 });
 
+describe('createRouter', () => {
+  it('uses default service when none is provided', () => {
+    const defaultRouter = createRouter();
+    expect(defaultRouter).toBeDefined();
+    expect(defaultRouter.stack.length).toBeGreaterThan(0);
+  });
+});
+
 describe('GET /', () => {
   it('renders index with pokemon array on success', async () => {
     const fakePokemon = [{ id: 1, name: 'bulbasaur' }];

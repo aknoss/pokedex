@@ -271,6 +271,51 @@ describe('getPokemonDetail', () => {
     expect(result!.id).toBe(1);
   });
 
+  it('filters out moves when move fetch fails', async () => {
+    global.fetch = vi.fn((url: any) => {
+      if ((url as string).includes('pokemon-species')) {
+        return Promise.resolve({
+          ok: true,
+          json: () => Promise.resolve(makeSpeciesResponse()),
+        });
+      }
+      if ((url as string).includes('/move/')) {
+        return Promise.resolve({ ok: false });
+      }
+      const id = parseInt((url as string).match(/pokemon\/(\d+)/)![1]);
+      return Promise.resolve({
+        ok: true,
+        json: () => Promise.resolve(makePokemonResponse(id)),
+      });
+    }) as Mock;
+
+    const result = await pokeapi.getPokemonDetail(1);
+    expect(result!.moves).toEqual([]);
+  });
+
+  it('returns null when pokemon not found in cache', async () => {
+    // Load cache with pokemon that has mismatched IDs
+    global.fetch = vi.fn((url: any) => {
+      return Promise.resolve({
+        ok: true,
+        json: () =>
+          Promise.resolve({
+            id: 200, // ID outside 1-151 range in the returned data
+            name: 'fake',
+            types: [{ type: { name: 'normal' } }],
+            stats: [],
+            abilities: [],
+            moves: [],
+          }),
+      });
+    }) as Mock;
+
+    await pokeapi.getAllGen1Pokemon();
+    // numId=1 is valid range but find() won't match since all cached pokemon have id=200
+    const result = await pokeapi.getPokemonDetail(1);
+    expect(result).toBeNull();
+  });
+
   it('caches species data across calls', async () => {
     setupWithCache();
 
