@@ -111,7 +111,6 @@ function mapPokemon(data: RawPokemonData): Pokemon {
     })),
     moveRefs: data.moves
       .filter((m) => m.version_group_details.some((v) => v.move_learn_method.name === 'level-up'))
-      .slice(0, 8)
       .map((m) => m.move.url),
   };
 }
