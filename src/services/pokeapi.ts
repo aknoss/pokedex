@@ -1,6 +1,6 @@
 const SPRITE_BASE =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
-const GEN1_COUNT = 151;
+export const GEN1_COUNT = 151;
 
 interface RawPokemonType {
   type: { name: string };
@@ -50,7 +50,7 @@ interface RawSpeciesData {
   flavor_text_entries: RawFlavorTextEntry[];
 }
 
-interface Pokemon {
+export interface Pokemon {
   id: number;
   name: string;
   types: string[];
@@ -60,13 +60,13 @@ interface Pokemon {
   moveRefs: string[];
 }
 
-interface Move {
+export interface Move {
   name: string;
   type: string;
   pp: number;
 }
 
-interface PokemonDetail extends Pokemon {
+export interface PokemonDetail extends Pokemon {
   flavorText: string;
   moves: Move[];
 }
@@ -95,7 +95,7 @@ async function fetchMoveDetails(moveUrl: string): Promise<Move | null> {
   return move;
 }
 
-function mapPokemon(data: RawPokemonData): Pokemon {
+export function mapPokemon(data: RawPokemonData): Pokemon {
   return {
     id: data.id,
     name: data.name,
@@ -115,7 +115,7 @@ function mapPokemon(data: RawPokemonData): Pokemon {
   };
 }
 
-async function getAllGen1Pokemon(): Promise<Pokemon[]> {
+export async function getAllGen1Pokemon(): Promise<Pokemon[]> {
   if (cache.pokemon) return cache.pokemon;
 
   const ids = Array.from({ length: GEN1_COUNT }, (_, i) => i + 1);
@@ -131,7 +131,7 @@ async function getAllGen1Pokemon(): Promise<Pokemon[]> {
   return results;
 }
 
-async function getPokemonDetail(id: string | number): Promise<PokemonDetail | null> {
+export async function getPokemonDetail(id: string | number): Promise<PokemonDetail | null> {
   const numId = Number(id);
   if (isNaN(numId) || numId < 1 || numId > GEN1_COUNT) return null;
 
@@ -157,6 +157,3 @@ async function getPokemonDetail(id: string | number): Promise<PokemonDetail | nu
 
   return { ...pokemon, flavorText: cache.species.get(numId)!, moves };
 }
-
-export { getAllGen1Pokemon, getPokemonDetail, mapPokemon, GEN1_COUNT };
-export type { Pokemon, PokemonDetail, Move };

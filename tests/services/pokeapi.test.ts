@@ -106,7 +106,7 @@ describe('getAllGen1Pokemon', () => {
     });
   });
 
-  it('calls fetch 151 times (batches of 20)', async () => {
+  it('calls fetch 151 times', async () => {
     mockFetch((url) => {
       const id = parseInt(url.match(/pokemon\/(\d+)/)![1]);
       return makePokemonResponse(id);
