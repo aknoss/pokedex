@@ -1,6 +1,8 @@
 import { describe, it, expect, vi, beforeEach, afterEach } from 'vitest';
 
-const mockListen = vi.fn((_port: any, cb?: () => void) => { cb?.(); });
+const mockListen = vi.fn((_port: any, cb?: () => void) => {
+  cb?.();
+});
 const mockSet = vi.fn();
 const mockUse = vi.fn();
 const mockApp = { set: mockSet, use: mockUse, listen: mockListen };
@@ -69,7 +71,9 @@ describe('server startup', () => {
     });
 
     expect(mockListen).toHaveBeenCalledWith(3000, expect.any(Function));
-    expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('cache will load on first request'));
+    expect(consoleSpy).toHaveBeenCalledWith(
+      expect.stringContaining('cache will load on first request'),
+    );
 
     consoleSpy.mockRestore();
     consoleErrorSpy.mockRestore();

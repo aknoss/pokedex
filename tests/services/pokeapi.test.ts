@@ -295,7 +295,7 @@ describe('getPokemonDetail', () => {
 
   it('returns null when pokemon not found in cache', async () => {
     // Load cache with pokemon that has mismatched IDs
-    global.fetch = vi.fn((url: any) => {
+    global.fetch = vi.fn(() => {
       return Promise.resolve({
         ok: true,
         json: () =>
