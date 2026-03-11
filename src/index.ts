@@ -1,8 +1,8 @@
 import dotenv from 'dotenv';
 import express from 'express';
 import path from 'path';
-import createPokemonRoutes from './src/routes/pokemon';
-import { getAllGen1Pokemon } from './src/services/pokeapi';
+import createPokemonRoutes from './routes/pokemon';
+import { getAllGen1Pokemon } from './services/pokeapi';
 
 dotenv.config();
 
