@@ -1,6 +1,7 @@
 const SPRITE_BASE =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
 export const GEN1_COUNT = 151;
+export const GEN2_COUNT = 251;
 
 interface RawPokemonType {
   type: { name: string };
@@ -132,10 +133,10 @@ export function mapPokemon(data: RawPokemonData): Pokemon {
   };
 }
 
-export async function getAllGen1Pokemon(): Promise<Pokemon[]> {
+export async function getAllPokemon(): Promise<Pokemon[]> {
   if (cache.pokemon) return cache.pokemon;
 
-  const ids = Array.from({ length: GEN1_COUNT }, (_, i) => i + 1);
+  const ids = Array.from({ length: GEN2_COUNT }, (_, i) => i + 1);
   const results = await fetchInBatches(ids, BATCH_SIZE, async (id) => {
     const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
     if (!res.ok) throw new Error(`Failed to fetch pokemon ${id}`);
@@ -148,9 +149,9 @@ export async function getAllGen1Pokemon(): Promise<Pokemon[]> {
 
 export async function getPokemonDetail(id: string | number): Promise<PokemonDetail | null> {
   const numId = Number(id);
-  if (isNaN(numId) || numId < 1 || numId > GEN1_COUNT) return null;
+  if (isNaN(numId) || numId < 1 || numId > GEN2_COUNT) return null;
 
-  const all = await getAllGen1Pokemon();
+  const all = await getAllPokemon();
   const pokemon = all.find((p) => p.id === numId);
 
   if (!pokemon) return null;

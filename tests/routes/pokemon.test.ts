@@ -24,7 +24,7 @@ beforeEach(() => {
   mockGetAll = vi.fn();
   mockGetDetail = vi.fn();
   router = createRouter({
-    getAllGen1Pokemon: mockGetAll,
+    getAllPokemon: mockGetAll,
     getPokemonDetail: mockGetDetail,
   });
 });

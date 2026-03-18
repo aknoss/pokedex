@@ -2,17 +2,17 @@ import express, { Request, Response, Router } from 'express';
 import * as defaultService from '../services/pokeapi';
 
 interface PokemonService {
-  getAllGen1Pokemon: typeof defaultService.getAllGen1Pokemon;
+  getAllPokemon: typeof defaultService.getAllPokemon;
   getPokemonDetail: typeof defaultService.getPokemonDetail;
 }
 
 function createRouter(service?: PokemonService): Router {
-  const { getAllGen1Pokemon, getPokemonDetail } = service || defaultService;
+  const { getAllPokemon, getPokemonDetail } = service || defaultService;
   const router = express.Router();
 
   router.get('/', async (_req: Request, res: Response) => {
     try {
-      const pokemon = await getAllGen1Pokemon();
+      const pokemon = await getAllPokemon();
       res.render('index', { pokemon });
     } catch {
       res.status(500).render('index', { pokemon: [] });

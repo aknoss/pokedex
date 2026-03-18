@@ -86,15 +86,15 @@ describe('mapPokemon', () => {
   });
 });
 
-describe('getAllGen1Pokemon', () => {
-  it('returns 151 Pokemon with correct shape', async () => {
+describe('getAllPokemon', () => {
+  it('returns 251 Pokemon with correct shape', async () => {
     mockFetch((url) => {
       const id = parseInt(url.match(/pokemon\/(\d+)/)![1]);
       return makePokemonResponse(id);
     });
 
-    const result = await pokeapi.getAllGen1Pokemon();
-    expect(result).toHaveLength(151);
+    const result = await pokeapi.getAllPokemon();
+    expect(result).toHaveLength(251);
     expect(result[0]).toEqual({
       id: 1,
       name: 'pokemon-1',
@@ -106,14 +106,14 @@ describe('getAllGen1Pokemon', () => {
     });
   });
 
-  it('calls fetch 151 times', async () => {
+  it('calls fetch 251 times', async () => {
     mockFetch((url) => {
       const id = parseInt(url.match(/pokemon\/(\d+)/)![1]);
       return makePokemonResponse(id);
     });
 
-    await pokeapi.getAllGen1Pokemon();
-    expect(global.fetch).toHaveBeenCalledTimes(151);
+    await pokeapi.getAllPokemon();
+    expect(global.fetch).toHaveBeenCalledTimes(251);
   });
 
   it('caches results after first call', async () => {
@@ -122,10 +122,10 @@ describe('getAllGen1Pokemon', () => {
       return makePokemonResponse(id);
     });
 
-    await pokeapi.getAllGen1Pokemon();
+    await pokeapi.getAllPokemon();
     const callCount = (global.fetch as Mock).mock.calls.length;
 
-    await pokeapi.getAllGen1Pokemon();
+    await pokeapi.getAllPokemon();
     expect(global.fetch).toHaveBeenCalledTimes(callCount);
   });
 
@@ -158,7 +158,7 @@ describe('getAllGen1Pokemon', () => {
       }),
     ) as Mock;
 
-    const result = await pokeapi.getAllGen1Pokemon();
+    const result = await pokeapi.getAllPokemon();
     const bulbasaur = result[0];
 
     expect(bulbasaur.types).toEqual(['grass', 'poison']);
@@ -185,7 +185,7 @@ describe('getAllGen1Pokemon', () => {
         json: () => {
           resolveCount++;
           // When a batch of 20 completes, snapshot and reset
-          if (resolveCount % 20 === 0 || resolveCount === 151) {
+          if (resolveCount % 20 === 0 || resolveCount === 251) {
             callTimestamps.push([...batchTracker]);
             batchTracker = [];
           }
@@ -194,20 +194,20 @@ describe('getAllGen1Pokemon', () => {
       });
     }) as Mock;
 
-    await pokeapi.getAllGen1Pokemon();
+    await pokeapi.getAllPokemon();
 
-    // Should have 8 batches: 7 full batches of 20 + 1 batch of 11
-    expect(callTimestamps).toHaveLength(8);
-    for (let i = 0; i < 7; i++) {
+    // Should have 13 batches: 12 full batches of 20 + 1 batch of 11
+    expect(callTimestamps).toHaveLength(13);
+    for (let i = 0; i < 12; i++) {
       expect(callTimestamps[i]).toHaveLength(20);
     }
-    expect(callTimestamps[7]).toHaveLength(11);
+    expect(callTimestamps[12]).toHaveLength(11);
   });
 
   it('propagates fetch errors', async () => {
     global.fetch = vi.fn(() => Promise.resolve({ ok: false })) as Mock;
 
-    await expect(pokeapi.getAllGen1Pokemon()).rejects.toThrow('Failed to fetch pokemon');
+    await expect(pokeapi.getAllPokemon()).rejects.toThrow('Failed to fetch pokemon');
   });
 });
 
@@ -232,7 +232,7 @@ describe('getPokemonDetail', () => {
   it('returns null for out-of-range IDs', async () => {
     setupWithCache();
     expect(await pokeapi.getPokemonDetail(0)).toBeNull();
-    expect(await pokeapi.getPokemonDetail(152)).toBeNull();
+    expect(await pokeapi.getPokemonDetail(252)).toBeNull();
     expect(await pokeapi.getPokemonDetail(-1)).toBeNull();
     expect(await pokeapi.getPokemonDetail('abc')).toBeNull();
   });
@@ -332,7 +332,7 @@ describe('getPokemonDetail', () => {
         ok: true,
         json: () =>
           Promise.resolve({
-            id: 200, // ID outside 1-151 range in the returned data
+            id: 999, // ID outside 1-251 range in the returned data
             name: 'fake',
             types: [{ type: { name: 'normal' } }],
             stats: [],
@@ -342,8 +342,8 @@ describe('getPokemonDetail', () => {
       });
     }) as Mock;
 
-    await pokeapi.getAllGen1Pokemon();
-    // numId=1 is valid range but find() won't match since all cached pokemon have id=200
+    await pokeapi.getAllPokemon();
+    // numId=1 is valid range but find() won't match since all cached pokemon have id=999
     const result = await pokeapi.getPokemonDetail(1);
     expect(result).toBeNull();
   });

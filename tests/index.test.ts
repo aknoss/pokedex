@@ -21,10 +21,10 @@ vi.mock('../src/routes/pokemon', () => ({
 }));
 
 vi.mock('../src/services/pokeapi', () => ({
-  getAllGen1Pokemon: vi.fn(),
+  getAllPokemon: vi.fn(),
 }));
 
-import { getAllGen1Pokemon } from '../src/services/pokeapi';
+import { getAllPokemon } from '../src/services/pokeapi';
 
 beforeEach(() => {
   vi.resetModules();
@@ -39,7 +39,7 @@ afterEach(() => {
 describe('server startup', () => {
   it('starts server after successful cache warming', async () => {
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    vi.mocked(getAllGen1Pokemon).mockResolvedValue([]);
+    vi.mocked(getAllPokemon).mockResolvedValue([]);
 
     await import('../src/index');
 
@@ -62,7 +62,7 @@ describe('server startup', () => {
   it('starts server with fallback message when cache warming fails', async () => {
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
     const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-    vi.mocked(getAllGen1Pokemon).mockRejectedValue(new Error('network error'));
+    vi.mocked(getAllPokemon).mockRejectedValue(new Error('network error'));
 
     await import('../src/index');
 
