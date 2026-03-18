@@ -71,6 +71,23 @@ export interface PokemonDetail extends Pokemon {
   moves: Move[];
 }
 
+const BATCH_SIZE = 20;
+
+async function fetchInBatches<T>(
+  ids: number[],
+  batchSize: number,
+  fn: (id: number) => Promise<T>,
+): Promise<T[]> {
+  const results: T[] = [];
+  const totalBatches = Math.ceil(ids.length / batchSize);
+  for (let i = 0; i < totalBatches; i++) {
+    const batch = ids.slice(i * batchSize, (i + 1) * batchSize);
+    const batchResults = await Promise.all(batch.map(fn));
+    results.push(...batchResults);
+  }
+  return results;
+}
+
 const cache: {
   pokemon: Pokemon[] | null;
   species: Map<number, string>;
@@ -119,13 +136,11 @@ export async function getAllGen1Pokemon(): Promise<Pokemon[]> {
   if (cache.pokemon) return cache.pokemon;
 
   const ids = Array.from({ length: GEN1_COUNT }, (_, i) => i + 1);
-  const results = await Promise.all(
-    ids.map(async (id) => {
-      const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
-      if (!res.ok) throw new Error(`Failed to fetch pokemon ${id}`);
-      return mapPokemon(await res.json());
-    }),
-  );
+  const results = await fetchInBatches(ids, BATCH_SIZE, async (id) => {
+    const res = await fetch(`https://pokeapi.co/api/v2/pokemon/${id}`);
+    if (!res.ok) throw new Error(`Failed to fetch pokemon ${id}`);
+    return mapPokemon(await res.json());
+  });
 
   cache.pokemon = results;
   return results;

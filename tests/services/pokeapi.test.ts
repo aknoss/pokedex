@@ -172,6 +172,38 @@ describe('getAllGen1Pokemon', () => {
     ]);
   });
 
+  it('fetches in batches of 20', async () => {
+    const callTimestamps: number[][] = [];
+    let batchTracker: number[] = [];
+    let resolveCount = 0;
+
+    global.fetch = vi.fn((url: any) => {
+      const id = parseInt((url as string).match(/pokemon\/(\d+)/)![1]);
+      batchTracker.push(id);
+      return Promise.resolve({
+        ok: true,
+        json: () => {
+          resolveCount++;
+          // When a batch of 20 completes, snapshot and reset
+          if (resolveCount % 20 === 0 || resolveCount === 151) {
+            callTimestamps.push([...batchTracker]);
+            batchTracker = [];
+          }
+          return Promise.resolve(makePokemonResponse(id));
+        },
+      });
+    }) as Mock;
+
+    await pokeapi.getAllGen1Pokemon();
+
+    // Should have 8 batches: 7 full batches of 20 + 1 batch of 11
+    expect(callTimestamps).toHaveLength(8);
+    for (let i = 0; i < 7; i++) {
+      expect(callTimestamps[i]).toHaveLength(20);
+    }
+    expect(callTimestamps[7]).toHaveLength(11);
+  });
+
   it('propagates fetch errors', async () => {
     global.fetch = vi.fn(() => Promise.resolve({ ok: false })) as Mock;
 
