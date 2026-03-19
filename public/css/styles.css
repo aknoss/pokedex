@@ -330,3 +330,31 @@ body {
   min-width: 45px;
   text-align: right;
 }
+
+.scroll-top-btn {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  width: 48px;
+  height: 48px;
+  background: #e3350d;
+  color: #fff;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.8rem;
+  padding-top: 20px;
+  display: none;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  z-index: 1000;
+}
+
+.scroll-top-btn.visible {
+  display: flex;
+}
+
+.scroll-top-btn:hover {
+  background: #c42d0b;
+}
