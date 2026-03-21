@@ -1,5 +1,6 @@
 import express, { Request, Response, Router } from 'express';
 import * as defaultService from '../services/pokeapi';
+import { GEN1_COUNT, GEN2_COUNT } from '../services/pokeapi';
 
 interface PokemonService {
   getAllPokemon: typeof defaultService.getAllPokemon;
@@ -13,9 +14,9 @@ function createRouter(service?: PokemonService): Router {
   router.get('/', async (_req: Request, res: Response) => {
     try {
       const pokemon = await getAllPokemon();
-      res.render('index', { pokemon });
+      res.render('index', { pokemon, GEN1_COUNT, GEN2_COUNT });
     } catch {
-      res.status(500).render('index', { pokemon: [] });
+      res.status(500).render('index', { pokemon: [], GEN1_COUNT, GEN2_COUNT });
     }
   });
 

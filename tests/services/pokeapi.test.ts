@@ -87,14 +87,14 @@ describe('mapPokemon', () => {
 });
 
 describe('getAllPokemon', () => {
-  it('returns 251 Pokemon with correct shape', async () => {
+  it('returns 386 Pokemon with correct shape', async () => {
     mockFetch((url) => {
       const id = parseInt(url.match(/pokemon\/(\d+)/)![1]);
       return makePokemonResponse(id);
     });
 
     const result = await pokeapi.getAllPokemon();
-    expect(result).toHaveLength(251);
+    expect(result).toHaveLength(386);
     expect(result[0]).toEqual({
       id: 1,
       name: 'pokemon-1',
@@ -106,14 +106,14 @@ describe('getAllPokemon', () => {
     });
   });
 
-  it('calls fetch 251 times', async () => {
+  it('calls fetch 386 times', async () => {
     mockFetch((url) => {
       const id = parseInt(url.match(/pokemon\/(\d+)/)![1]);
       return makePokemonResponse(id);
     });
 
     await pokeapi.getAllPokemon();
-    expect(global.fetch).toHaveBeenCalledTimes(251);
+    expect(global.fetch).toHaveBeenCalledTimes(386);
   });
 
   it('caches results after first call', async () => {
@@ -185,7 +185,7 @@ describe('getAllPokemon', () => {
         json: () => {
           resolveCount++;
           // When a batch of 20 completes, snapshot and reset
-          if (resolveCount % 20 === 0 || resolveCount === 251) {
+          if (resolveCount % 20 === 0 || resolveCount === 386) {
             callTimestamps.push([...batchTracker]);
             batchTracker = [];
           }
@@ -196,12 +196,12 @@ describe('getAllPokemon', () => {
 
     await pokeapi.getAllPokemon();
 
-    // Should have 13 batches: 12 full batches of 20 + 1 batch of 11
-    expect(callTimestamps).toHaveLength(13);
-    for (let i = 0; i < 12; i++) {
+    // Should have 20 batches: 19 full batches of 20 + 1 batch of 6
+    expect(callTimestamps).toHaveLength(20);
+    for (let i = 0; i < 19; i++) {
       expect(callTimestamps[i]).toHaveLength(20);
     }
-    expect(callTimestamps[12]).toHaveLength(11);
+    expect(callTimestamps[19]).toHaveLength(6);
   });
 
   it('propagates fetch errors', async () => {
@@ -232,7 +232,7 @@ describe('getPokemonDetail', () => {
   it('returns null for out-of-range IDs', async () => {
     setupWithCache();
     expect(await pokeapi.getPokemonDetail(0)).toBeNull();
-    expect(await pokeapi.getPokemonDetail(252)).toBeNull();
+    expect(await pokeapi.getPokemonDetail(387)).toBeNull();
     expect(await pokeapi.getPokemonDetail(-1)).toBeNull();
     expect(await pokeapi.getPokemonDetail('abc')).toBeNull();
   });
@@ -332,7 +332,7 @@ describe('getPokemonDetail', () => {
         ok: true,
         json: () =>
           Promise.resolve({
-            id: 999, // ID outside 1-251 range in the returned data
+            id: 999, // ID outside 1-386 range in the returned data
             name: 'fake',
             types: [{ type: { name: 'normal' } }],
             stats: [],
