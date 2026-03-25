@@ -1,7 +1,16 @@
 <%- include('partials/header', { title: pokemon.name + ' | Pokedex' }) %>
 
 <div class="container detail-page">
-  <a href="/" class="back-link">&larr; Back to Pokedex</a>
+  <button class="back-link" id="back-btn">&larr; Back to Pokedex</button>
+  <script>
+    document.getElementById('back-btn').addEventListener('click', function () {
+      if (document.referrer && new URL(document.referrer).origin === location.origin) {
+        history.back();
+      } else {
+        location.href = '/';
+      }
+    });
+  </script>
 
   <div class="detail-header">
     <img src="<%= pokemon.sprite %>" alt="<%= pokemon.name %>" class="detail-image">

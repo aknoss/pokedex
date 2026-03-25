@@ -3,7 +3,9 @@ document.addEventListener('DOMContentLoaded', () => {
   const cards = document.querySelectorAll('.card');
   const genButtons = document.querySelectorAll('.gen-btn');
 
-  let activeGen = 'all';
+  const params = new URLSearchParams(window.location.search);
+  const activeBtn = document.querySelector('.gen-btn.active');
+  let activeGen = activeBtn ? activeBtn.dataset.gen : (params.get('gen') || 'all');
 
   function filterCards() {
     const query = search.value.toLowerCase().trim();
@@ -23,9 +25,18 @@ document.addEventListener('DOMContentLoaded', () => {
       genButtons.forEach((b) => b.classList.remove('active'));
       btn.classList.add('active');
       activeGen = btn.dataset.gen;
+      const url = new URL(window.location);
+      if (activeGen === 'all') {
+        url.searchParams.delete('gen');
+      } else {
+        url.searchParams.set('gen', activeGen);
+      }
+      history.replaceState(null, '', url);
       filterCards();
     });
   });
+
+  filterCards();
 
   const scrollTopBtn = document.getElementById('scroll-top');
   window.addEventListener('scroll', () => {

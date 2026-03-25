@@ -11,12 +11,13 @@ function createRouter(service?: PokemonService): Router {
   const { getAllPokemon, getPokemonDetail } = service || defaultService;
   const router = express.Router();
 
-  router.get('/', async (_req: Request, res: Response) => {
+  router.get('/', async (req: Request, res: Response) => {
     try {
       const pokemon = await getAllPokemon();
-      res.render('index', { pokemon, GEN1_COUNT, GEN2_COUNT });
+      const gen = ['1', '2', '3'].includes(req.query.gen as string) ? req.query.gen : 'all';
+      res.render('index', { pokemon, GEN1_COUNT, GEN2_COUNT, gen });
     } catch {
-      res.status(500).render('index', { pokemon: [], GEN1_COUNT, GEN2_COUNT });
+      res.status(500).render('index', { pokemon: [], GEN1_COUNT, GEN2_COUNT, gen: 'all' });
     }
   });
 
