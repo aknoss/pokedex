@@ -9,13 +9,14 @@
       <button class="gen-btn<%= gen === '1' ? ' active' : '' %>" data-gen="1">Gen 1</button>
       <button class="gen-btn<%= gen === '2' ? ' active' : '' %>" data-gen="2">Gen 2</button>
       <button class="gen-btn<%= gen === '3' ? ' active' : '' %>" data-gen="3">Gen 3</button>
+      <button class="gen-btn<%= gen === '4' ? ' active' : '' %>" data-gen="4">Gen 4</button>
     </div>
     <input type="text" id="search" placeholder="Search Pokemon..." autocomplete="off">
   </div>
 
   <div class="card-grid">
     <% pokemon.forEach(p => { %>
-      <a href="/pokemon/<%= p.id %>" class="card" data-name="<%= p.name %>" data-gen="<%= p.id <= GEN1_COUNT ? '1' : p.id <= GEN2_COUNT ? '2' : '3' %>">
+      <a href="/pokemon/<%= p.id %>" class="card" data-name="<%= p.name %>" data-gen="<%= p.id <= GEN1_COUNT ? '1' : p.id <= GEN2_COUNT ? '2' : p.id <= GEN3_COUNT ? '3' : '4' %>">
         <img src="<%= p.sprite %>" alt="<%= p.name %>" loading="lazy">
         <span class="card-id">#<%= String(p.id).padStart(3, '0') %></span>
         <span class="card-name"><%= p.name %></span>

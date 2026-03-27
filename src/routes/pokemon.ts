@@ -1,6 +1,6 @@
 import express, { Request, Response, Router } from 'express';
 import * as defaultService from '../services/pokeapi';
-import { GEN1_COUNT, GEN2_COUNT } from '../services/pokeapi';
+import { GEN1_COUNT, GEN2_COUNT, GEN3_COUNT } from '../services/pokeapi';
 
 interface PokemonService {
   getAllPokemon: typeof defaultService.getAllPokemon;
@@ -14,10 +14,10 @@ function createRouter(service?: PokemonService): Router {
   router.get('/', async (req: Request, res: Response) => {
     try {
       const pokemon = await getAllPokemon();
-      const gen = ['1', '2', '3'].includes(req.query.gen as string) ? req.query.gen : 'all';
-      res.render('index', { pokemon, GEN1_COUNT, GEN2_COUNT, gen });
+      const gen = ['1', '2', '3', '4'].includes(req.query.gen as string) ? req.query.gen : 'all';
+      res.render('index', { pokemon, GEN1_COUNT, GEN2_COUNT, GEN3_COUNT, gen });
     } catch {
-      res.status(500).render('index', { pokemon: [], GEN1_COUNT, GEN2_COUNT, gen: 'all' });
+      res.status(500).render('index', { pokemon: [], GEN1_COUNT, GEN2_COUNT, GEN3_COUNT, gen: 'all' });
     }
   });
 

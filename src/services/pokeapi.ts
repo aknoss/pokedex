@@ -4,6 +4,7 @@ import path from 'path';
 export const GEN1_COUNT = 151;
 export const GEN2_COUNT = 251;
 export const GEN3_COUNT = 386;
+export const GEN4_COUNT = 493;
 
 export interface Pokemon {
   id: number;
@@ -34,6 +35,6 @@ export async function getAllPokemon(): Promise<PokemonDetail[]> {
 
 export async function getPokemonDetail(id: string | number): Promise<PokemonDetail | null> {
   const numId = Number(id);
-  if (isNaN(numId) || numId < 1 || numId > GEN3_COUNT) return null;
+  if (isNaN(numId) || numId < 1 || numId > GEN4_COUNT) return null;
   return allPokemon.find((p) => p.id === numId) ?? null;
 }

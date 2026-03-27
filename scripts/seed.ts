@@ -4,7 +4,7 @@ import path from 'path';
 const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
 const SPRITE_BASE =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
-const TOTAL_POKEMON = 386;
+const TOTAL_POKEMON = 493;
 const BATCH_SIZE = 20;
 
 interface Pokemon {
