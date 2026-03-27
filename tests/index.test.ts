@@ -21,15 +21,16 @@ vi.mock('../src/routes/pokemon', () => ({
 }));
 
 vi.mock('../src/services/pokeapi', () => ({
-  getAllPokemon: vi.fn(),
+  getAllPokemon: vi.fn(() => []),
+  getPokemonDetail: vi.fn(),
+  GEN1_COUNT: 151,
+  GEN2_COUNT: 251,
+  GEN3_COUNT: 386,
 }));
-
-import { getAllPokemon } from '../src/services/pokeapi';
 
 beforeEach(() => {
   vi.resetModules();
   vi.clearAllMocks();
-  // Re-apply mocks after resetModules
 });
 
 afterEach(() => {
@@ -37,45 +38,18 @@ afterEach(() => {
 });
 
 describe('server startup', () => {
-  it('starts server after successful cache warming', async () => {
+  it('starts server immediately', async () => {
     const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    vi.mocked(getAllPokemon).mockResolvedValue([]);
 
     await import('../src/index');
-
-    // Wait for the .then() chain to resolve
-    await vi.waitFor(() => {
-      expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Cache warmed'));
-    });
 
     expect(mockSet).toHaveBeenCalledWith('view engine', 'ejs');
     expect(mockSet).toHaveBeenCalledWith('views', expect.stringContaining('views'));
     expect(mockUse).toHaveBeenCalledWith('static-middleware');
     expect(mockUse).toHaveBeenCalledWith('/', mockRouter);
     expect(mockListen).toHaveBeenCalledWith(3000, expect.any(Function));
-    expect(consoleSpy).toHaveBeenCalledWith('Warming Pokemon cache...');
     expect(consoleSpy).toHaveBeenCalledWith(expect.stringContaining('Pokedex running'));
 
     consoleSpy.mockRestore();
-  });
-
-  it('starts server with fallback message when cache warming fails', async () => {
-    const consoleSpy = vi.spyOn(console, 'log').mockImplementation(() => {});
-    const consoleErrorSpy = vi.spyOn(console, 'error').mockImplementation(() => {});
-    vi.mocked(getAllPokemon).mockRejectedValue(new Error('network error'));
-
-    await import('../src/index');
-
-    await vi.waitFor(() => {
-      expect(consoleErrorSpy).toHaveBeenCalledWith('Failed to warm cache:', 'network error');
-    });
-
-    expect(mockListen).toHaveBeenCalledWith(3000, expect.any(Function));
-    expect(consoleSpy).toHaveBeenCalledWith(
-      expect.stringContaining('cache will load on first request'),
-    );
-
-    consoleSpy.mockRestore();
-    consoleErrorSpy.mockRestore();
   });
 });

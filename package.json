@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "test:coverage": "vitest --coverage",
     "lint": "eslint .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "seed": "tsx scripts/seed.ts"
   },
   "dependencies": {
     "dotenv": "^17.3.1",
