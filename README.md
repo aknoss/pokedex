@@ -1,6 +1,6 @@
 # Pokedex
 
-A server-rendered Pokedex web app showing all 151 Gen 1 Pokemon, built with Express and EJS.
+A server-rendered Pokedex web app built with Express and EJS.
 
 ## Features
 
