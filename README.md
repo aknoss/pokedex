@@ -4,7 +4,7 @@ A server-rendered Pokedex web app built with Express and EJS.
 
 ## Features
 
-- Browse all Gen 1 Pokemon in a card grid
+- Browse Pokemons in a card grid
 - View detailed info for each Pokemon (stats, types, flavor text)
 - Client-side search filtering by name
 - In-memory caching of Pokemon data from PokeAPI
