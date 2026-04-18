@@ -46,7 +46,7 @@ describe('GET /', () => {
     const res = mockRes();
     await handler({ query: {} }, res);
 
-    expect(res.render).toHaveBeenCalledWith('index', { pokemon: fakePokemon, GEN1_COUNT: 151, GEN2_COUNT: 251, gen: 'all' });
+    expect(res.render).toHaveBeenCalledWith('index', { pokemon: fakePokemon, GEN1_COUNT: 151, GEN2_COUNT: 251, GEN3_COUNT: 386, GEN4_COUNT: 493, gen: 'all' });
   });
 
   it('renders index with empty array and 500 on error', async () => {
@@ -57,7 +57,7 @@ describe('GET /', () => {
     await handler({ query: {} }, res);
 
     expect(res.status).toHaveBeenCalledWith(500);
-    expect(res.render).toHaveBeenCalledWith('index', { pokemon: [], GEN1_COUNT: 151, GEN2_COUNT: 251, gen: 'all' });
+    expect(res.render).toHaveBeenCalledWith('index', { pokemon: [], GEN1_COUNT: 151, GEN2_COUNT: 251, GEN3_COUNT: 386, GEN4_COUNT: 493, gen: 'all' });
   });
 });
 
