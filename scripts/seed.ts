@@ -4,8 +4,8 @@ import path from 'path';
 const POKEAPI_BASE = 'https://pokeapi.co/api/v2';
 const SPRITE_BASE =
   'https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork';
-const TOTAL_POKEMON = 649;
-const BATCH_SIZE = 20;
+const TOTAL_POKEMON = 1025;
+const BATCH_SIZE = 5;
 
 interface Pokemon {
   id: number;
@@ -52,9 +52,7 @@ async function fetchPokemon(id: number): Promise<Pokemon> {
     }),
   );
 
-  const entry = speciesData.flavor_text_entries.find(
-    (e: any) => e.language.name === 'en',
-  );
+  const entry = speciesData.flavor_text_entries.find((e: any) => e.language.name === 'en');
   const flavorText = entry ? entry.flavor_text.replace(/[\n\f]/g, ' ') : '';
 
   return {

@@ -6,6 +6,10 @@ export const GEN2_COUNT = 251;
 export const GEN3_COUNT = 386;
 export const GEN4_COUNT = 493;
 export const GEN5_COUNT = 649;
+export const GEN6_COUNT = 721;
+export const GEN7_COUNT = 809;
+export const GEN8_COUNT = 905;
+export const GEN9_COUNT = 1025;
 
 export interface Pokemon {
   id: number;
@@ -36,6 +40,6 @@ export async function getAllPokemon(): Promise<PokemonDetail[]> {
 
 export async function getPokemonDetail(id: string | number): Promise<PokemonDetail | null> {
   const numId = Number(id);
-  if (isNaN(numId) || numId < 1 || numId > GEN5_COUNT) return null;
+  if (isNaN(numId) || numId < 1 || numId > GEN9_COUNT) return null;
   return allPokemon.find((p) => p.id === numId) ?? null;
 }

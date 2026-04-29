@@ -11,13 +11,17 @@
       <button class="gen-btn<%= gen === '3' ? ' active' : '' %>" data-gen="3">Gen 3</button>
       <button class="gen-btn<%= gen === '4' ? ' active' : '' %>" data-gen="4">Gen 4</button>
       <button class="gen-btn<%= gen === '5' ? ' active' : '' %>" data-gen="5">Gen 5</button>
+      <button class="gen-btn<%= gen === '6' ? ' active' : '' %>" data-gen="6">Gen 6</button>
+      <button class="gen-btn<%= gen === '7' ? ' active' : '' %>" data-gen="7">Gen 7</button>
+      <button class="gen-btn<%= gen === '8' ? ' active' : '' %>" data-gen="8">Gen 8</button>
+      <button class="gen-btn<%= gen === '9' ? ' active' : '' %>" data-gen="9">Gen 9</button>
     </div>
     <input type="text" id="search" placeholder="Search Pokemon..." autocomplete="off">
   </div>
 
   <div class="card-grid">
     <% pokemon.forEach(p => { %>
-      <a href="/pokemon/<%= p.id %>" class="card" data-name="<%= p.name %>" data-gen="<%= p.id <= GEN1_COUNT ? '1' : p.id <= GEN2_COUNT ? '2' : p.id <= GEN3_COUNT ? '3' : p.id <= GEN4_COUNT ? '4' : '5' %>">
+      <a href="/pokemon/<%= p.id %>" class="card" data-name="<%= p.name %>" data-gen="<%= p.id <= GEN1_COUNT ? '1' : p.id <= GEN2_COUNT ? '2' : p.id <= GEN3_COUNT ? '3' : p.id <= GEN4_COUNT ? '4' : p.id <= GEN5_COUNT ? '5' : p.id <= GEN6_COUNT ? '6' : p.id <= GEN7_COUNT ? '7' : p.id <= GEN8_COUNT ? '8' : '9' %>">
         <img src="<%= p.sprite %>" alt="" loading="lazy">
         <span class="card-id">#<%= String(p.id).padStart(3, '0') %></span>
         <span class="card-name"><%= p.name %></span>
